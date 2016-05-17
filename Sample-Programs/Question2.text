@@ -1,0 +1,130 @@
+#include<cstdlib>
+#include<ctime>
+#include<string>
+#include <sstream>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    
+    int array1[10];
+    int array2[10];
+    int array3[10];
+    int array4[30];
+    std::srand(std::time(0));  // needed once per program run
+    for(int x=0;x<10;x++){
+        array1[x]= std::rand() % 1000 + 1;
+        array2[x]= std::rand() % 1000 + 1;
+        array3[x]= std::rand() % 1000 + 1;
+    }
+    cout<<"Elements in Array1:";
+    for(int x=0;x<10;x++){
+    cout<<array1[x]<<",";
+    }
+    
+    cout<<"\nElements in Array2:";
+    for(int x=0;x<10;x++){
+    cout<<array2[x]<<",";
+    }
+    
+    cout<<"\nElements in Array3:";
+    for(int x=0;x<10;x++){
+    cout<<array3[x]<<",";
+    }
+    
+    int w=sizeof(array1)/sizeof(array1[0]);
+    int x=sizeof(array1)/sizeof(array1[0])+sizeof(array2)/sizeof(array2[0]) ;
+    int y=sizeof(array1)/sizeof(array1[0])+sizeof(array2)/sizeof(array2[0])+sizeof(array3)/sizeof(array3[0]) ;
+    
+    for(int i = 0; i < w; i++)
+    array4[i]=array1[i];
+
+    for(int j = w ; j < x ; j++)
+    array4[j] = array2[j-w];
+    
+    for(int k=x;k<y;k++)
+    array4[k] = array3[k-x];
+    
+    cout<<"\nElements merged and stored in Array4:";
+    for(int x=0;x<sizeof(array4)/sizeof(array4[0]);x++){
+        cout<<array4[x]<<",";
+    }
+    int count=0;
+    int c,d;
+    int array5[30];
+    //Code to remove duplicates
+    for(c=0;c<sizeof(array4)/sizeof(array4[0]);c++)
+    { 
+        for(d=0;d<count;d++) 
+        { 
+            if(array4[c]==array5[d]) 
+                break; 
+        } 
+        if(d==count) 
+        { 
+            array5[count] = array4[c]; 
+            count++; 
+        } 
+    } 
+    
+    int temp;
+    //Code to arrange in ascending order
+    for(int i=0; i<=sizeof(array5)/sizeof(array5[0]); i++)
+            {
+                for(int j=i+1; j<=sizeof(array5)/sizeof(array5[0]); j++)
+                    {
+                        if(array5[i]<array5[j])
+                            {
+                                temp=array5[j];
+                                array5[j]=array5[i];
+                                array5[i]=temp;
+                            }
+                    }
+            }
+    
+    cout<<"\nArray without duplicates and in descending order";
+    
+    
+    vector<string> v;
+    
+    
+    for(c=0;c<count;c++){
+        cout<<array5[c]<<","; 
+        std::ostringstream strm;
+        strm << array5[c];
+        std::string numStr = strm.str();
+        v.push_back(numStr);
+    }
+    
+    for(int i=0; i<v.size(); i++){
+        if(array5[i]%5==0 && array5[i]%2==0){
+            v.at(i)="grapefruit";
+        }else if(array5[i]%5==0 && array5[i]%2!=0){
+            v.at(i)="five";
+        }else if(array5[i]%2==0 && array5[i]%5!=0){
+            v.at(i)="two";
+        }
+    }
+    
+    cout<<"\nUpdated Array1:";
+    for(c=0;c<v.size();c++){
+        cout<<v[c]<<","; 
+    }
+    
+    for(int i=0; i<v.size(); i++){
+        if(v.at(i)=="grapefruit"){
+            v.at(i)="2";
+        }else if(v.at(i)=="two"){
+            v.at(i)="grapefruit";
+        }
+    }
+    
+    cout<<"\nUpdated Array2:";
+    for(c=0;c<v.size();c++){
+        cout<<v[c]<<","; 
+    }
+    
+	return 0;
+}
